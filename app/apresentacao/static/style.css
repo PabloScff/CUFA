@@ -1,0 +1,129 @@
+/* Creamshaper – CUFA | mobile-first, pensado para uso sob luz solar direta.
+   Paleta (contraste calculado contra o fundo):
+   tinta #111111 / branco  = 18.9:1   |  tinta / amarelo #FFC400 = 11.8:1
+   apoio #404040 / branco  = 10.4:1   |  verde #0A5C2A / #E3F4E8 =  7.1:1
+   vermelho #9B1C1C / #FDECEC = 7.1:1 |  foco azul #0B3A8C / branco = 10.5:1
+   Alvos de toque >= 44x44 px (RTAC01); botões principais 48 px ou mais. */
+:root {
+  --tinta: #111111;
+  --apoio: #404040;
+  --papel: #ffffff;
+  --superficie: #f1f1ee;
+  --amarelo: #ffc400;
+  --borda: #5c5c5c;
+  --ok: #0a5c2a;
+  --ok-fundo: #e3f4e8;
+  --erro: #9b1c1c;
+  --erro-fundo: #fdecec;
+  --foco: #0b3a8c;
+  --toque: 44px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--tinta);
+  color: var(--amarelo);
+}
+.topo__logo { display: block; border-radius: 8px; }
+.topo__titulo { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: 0.2px; }
+
+.conteudo { max-width: 480px; margin: 0 auto; padding: 24px 16px 48px; }
+.titulo { margin: 0 0 8px; font-size: 26px; line-height: 1.2; font-weight: 800; }
+.apoio { margin: 0 0 24px; color: var(--apoio); }
+
+/* ---------- Faixa do ciclo ativo (Tela 2) ---------- */
+.ciclo { background: var(--amarelo); color: var(--tinta); padding: 14px 16px; border-bottom: 3px solid var(--tinta); }
+.ciclo__rotulo { margin: 0; font-size: 16px; font-weight: 600; }
+.ciclo__valor { margin: 0; font-size: 34px; line-height: 1.1; font-weight: 900; }
+
+.operador {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 16px; background: var(--superficie); border-bottom: 2px solid var(--borda);
+}
+.operador p { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.operador form { margin: 0; }
+
+/* ---------- Formulário ---------- */
+.form { display: flex; flex-direction: column; gap: 16px; }   /* 16px entre elementos (evita toques errados) */
+.campo { display: flex; flex-direction: column; }
+.campo label { font-weight: 700; margin-bottom: 6px; }          /* rótulo persistente acima do input */
+.opcional { font-weight: 400; color: var(--apoio); }
+
+.campo input[type="text"], .campo input[type="password"], .campo input[type="tel"], .campo input[type="number"] {
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 14px;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--borda);
+  border-radius: 8px;
+}
+.campo.campo--erro input[type] { border: 3px solid var(--erro); background: var(--erro-fundo); }
+.campo__msg { margin: 6px 0 0; font-size: 16px; color: var(--apoio); }
+.campo__msg--erro { display: flex; align-items: flex-start; gap: 6px; color: var(--erro); font-weight: 700; }
+
+.campo .marcador { font-weight: 400; }
+.marcador { display: flex; align-items: center; gap: 12px; min-height: var(--toque); margin: 4px 0 0; font-weight: 400; }
+.marcador input { width: 28px; height: 28px; margin: 0; accent-color: var(--tinta); }
+
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%;
+  min-height: var(--toque);
+  padding: 10px 16px;
+  font: inherit; font-weight: 800; text-decoration: none; text-align: center;
+  color: var(--tinta); background: var(--papel);
+  border: 2px solid var(--tinta); border-radius: 8px;
+  cursor: pointer;
+}
+.btn--primario { background: var(--amarelo); }
+.btn--primario:active { background: #e6af00; }
+.btn--login { height: 48px; }                       /* Tela 1: botão "Entrar no Sistema" com 48px */
+.btn--acao { min-height: 56px; font-size: 20px; }  /* Telas 2 e 3: acima de 48px, alcançável com o polegar */
+.btn--link { margin-top: 24px; }
+.btn--sair { width: auto; min-width: var(--toque); padding: 8px 16px; font-size: 16px; }
+.btn[disabled] { opacity: 1; background: var(--superficie); color: var(--apoio); border-color: var(--apoio); cursor: wait; }
+
+/* ---------- Alertas (cor + ícone + texto) ---------- */
+.alerta { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 20px; padding: 14px 16px; border-radius: 8px; font-weight: 700; }
+.alerta p { margin: 0; }
+.alerta--erro { background: var(--erro-fundo); color: var(--erro); border: 2px solid var(--erro); border-left-width: 10px; }
+.icone { flex: none; }
+
+/* ---------- Tela 3: resultado ---------- */
+.resultado { padding: 24px 20px; border-radius: 12px; border: 3px solid; }
+.resultado h1 { margin: 12px 0 8px; font-size: 32px; line-height: 1.1; font-weight: 900; }
+.resultado__texto { margin: 0 0 16px; font-size: 20px; font-weight: 600; }
+.resultado__icone { display: flex; }
+.resultado--ok { background: var(--ok-fundo); color: var(--ok); border-color: var(--ok); }
+.resultado--bloqueio { background: var(--erro-fundo); color: var(--erro); border-color: var(--erro); }
+
+.resumo { margin: 0; padding: 12px 0 0; border-top: 2px solid currentColor; display: grid; gap: 10px; }
+.resumo div { display: flex; justify-content: space-between; gap: 16px; }
+.resumo dt { font-weight: 600; }
+.resumo dd { margin: 0; font-weight: 800; text-align: right; overflow-wrap: anywhere; }
+
+@media (min-width: 640px) {
+  .conteudo { padding-top: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

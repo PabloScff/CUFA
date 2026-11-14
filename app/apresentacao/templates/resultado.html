@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone %}
+{% block titulo %}Resultado – Creamshaper – CUFA{% endblock %}
+{% block faixa %}
+<div class="operador">
+  <p>Operador: <strong>{{ operador.usuario }}</strong></p>
+  <form method="post" action="/logout"><button class="btn btn--sair" type="submit">Sair</button></form>
+</div>
+{% endblock %}
+{% block conteudo %}
+{# Tela 3: feedback multissensorial = cor + ícone + texto + vibração do aparelho (ver app.js). #}
+{% if r.registrada %}
+<section class="resultado resultado--ok" role="status" data-vibrar="sucesso">
+  <div class="resultado__icone">{{ icone('check', 64) }}</div>
+  <h1>Entrega registrada</h1>
+  <p class="resultado__texto">{{ r.nome_completo }} pode receber o mantimento agora.</p>
+  <dl class="resumo">
+    <div><dt>CPF</dt><dd>{{ r.cpf|cpf_mascarado }}</dd></div>
+    <div><dt>Ciclo</dt><dd>{{ ciclo_rotulo }}</dd></div>
+    <div><dt>Registrada em</dt><dd>{{ r.data_entrega|data_local }}</dd></div>
+    <div><dt>Operador</dt><dd>{{ r.operador_nome }}</dd></div>
+    {% if r.cadastro_novo %}<div><dt>Cadastro</dt><dd>Nova beneficiária cadastrada</dd></div>{% endif %}
+  </dl>
+</section>
+{% else %}
+<section class="resultado resultado--bloqueio" role="alert" data-vibrar="bloqueio">
+  <div class="resultado__icone">{{ icone('bloqueio', 64) }}</div>
+  <h1>Entrega bloqueada</h1>
+  <p class="resultado__texto">{{ r.nome_completo }} já recebeu o mantimento neste ciclo. Não entregue de novo.</p>
+  <dl class="resumo">
+    <div><dt>CPF</dt><dd>{{ r.cpf|cpf_mascarado }}</dd></div>
+    <div><dt>Ciclo</dt><dd>{{ ciclo_rotulo }}</dd></div>
+    <div><dt>Entrega anterior</dt><dd>{{ r.data_entrega|data_local }}</dd></div>
+    <div><dt>Registrada por</dt><dd>{{ r.operador_nome }}</dd></div>
+  </dl>
+</section>
+{% endif %}
+
+<a class="btn btn--primario btn--acao btn--link" href="/operacao/atendimento">Próximo atendimento</a>
+{% endblock %}

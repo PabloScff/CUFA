@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone %}
+{% block titulo %}Entrar – Creamshaper – CUFA{% endblock %}
+{% block conteudo %}
+<h1 class="titulo">Entrar para iniciar o atendimento</h1>
+<p class="apoio">Use o usuário e a senha que a coordenação da CUFA passou para você.</p>
+
+{% if erro %}
+<div class="alerta alerta--erro" role="alert">{{ icone('alerta', 28) }}<p>{{ erro }}</p></div>
+{% endif %}
+
+<form class="form" method="post" action="/login" autocomplete="on" novalidate>
+  <div class="campo">
+    <label for="usuario">CPF do Operador / Usuário</label>
+    <input id="usuario" name="usuario" type="text" value="{{ usuario }}" required maxlength="60"
+           autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+  </div>
+  <div class="campo">
+    <label for="senha">Senha</label>
+    <input id="senha" name="senha" type="password" required maxlength="128" autocomplete="current-password">
+    <label class="marcador" for="mostrar-senha">
+      <input id="mostrar-senha" type="checkbox" data-mostrar-senha="senha"> Mostrar senha
+    </label>
+  </div>
+  <button class="btn btn--primario btn--login" type="submit">Entrar no Sistema</button>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{# Ícones inline: todo estado crítico combina COR + ÍCONE + TEXTO (RTAC01). #}
+{% macro icone(nome, tam=24) -%}
+<svg class="icone" width="{{ tam }}" height="{{ tam }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{%- if nome == 'check' %}<circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-7"/>
+{%- elif nome == 'bloqueio' %}<circle cx="12" cy="12" r="10"/><path d="M5 5l14 14"/>
+{%- elif nome == 'alerta' %}<path d="M12 3L2 21h20L12 3z"/><path d="M12 10v5M12 18v.5"/>
+{%- endif %}
+</svg>
+{%- endmacro %}
+
+{# Campo com rótulo persistente SEMPRE acima do input (não some ao focar). #}
+{% macro campo(nome, rotulo, valor='', erro=None, tipo='text', obrigatorio=True, dica=None, attrs={}) %}
+<div class="campo{% if erro %} campo--erro{% endif %}">
+  <label for="{{ nome }}">{{ rotulo }}{% if not obrigatorio %} <span class="opcional">(opcional)</span>{% endif %}</label>
+  <input id="{{ nome }}" name="{{ nome }}" type="{{ tipo }}" value="{{ valor }}"
+         {%- if obrigatorio %} required{% endif %}
+         {%- if erro %} aria-invalid="true" aria-describedby="{{ nome }}-msg"
+         {%- elif dica %} aria-describedby="{{ nome }}-dica"{% endif %}
+         {%- for k, v in attrs.items() %} {{ k }}="{{ v }}"{% endfor %}>
+  {% if erro %}<p class="campo__msg campo__msg--erro" id="{{ nome }}-msg">{{ icone('alerta', 20) }}<span>{{ erro }}</span></p>
+  {% elif dica %}<p class="campo__msg" id="{{ nome }}-dica">{{ dica }}</p>{% endif %}
+</div>
+{% endmacro %}
