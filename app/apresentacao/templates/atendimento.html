@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone, campo %}
+{% block titulo %}Atendimento – Creamshaper – CUFA{% endblock %}
+{% block faixa %}
+<section class="ciclo" aria-label="Ciclo ativo">
+  <p class="ciclo__rotulo">Ciclo ativo</p>
+  <p class="ciclo__valor">{{ ciclo_rotulo }}</p>
+</section>
+<div class="operador">
+  <p>Operador: <strong>{{ operador.usuario }}</strong></p>
+  <form method="post" action="/logout"><button class="btn btn--sair" type="submit">Sair</button></form>
+</div>
+{% endblock %}
+{% block conteudo %}
+<h1 class="titulo">Atendimento da família</h1>
+
+{% if erros %}
+<div class="alerta alerta--erro" role="alert">{{ icone('alerta', 28) }}<p>Corrija os campos marcados abaixo e toque em registrar de novo.</p></div>
+{% endif %}
+
+<form class="form" method="post" action="/operacao/atendimento" data-uma-vez>
+  {{ campo('nome_completo', 'Nome Completo', valores.nome_completo, erros.nome_completo,
+           attrs={'maxlength': 120, 'autocomplete': 'off'}) }}
+  {{ campo('cpf', 'CPF', valores.cpf, erros.cpf, dica='Só números ou 000.000.000-00',
+           attrs={'inputmode': 'numeric', 'maxlength': 14, 'autocomplete': 'off', 'data-mascara': 'cpf'}) }}
+  {{ campo('telefone', 'Telefone', valores.telefone, erros.telefone, tipo='tel', obrigatorio=False,
+           attrs={'inputmode': 'tel', 'maxlength': 15, 'autocomplete': 'off', 'data-mascara': 'telefone'}) }}
+  {{ campo('endereco', 'Endereço', valores.endereco, erros.endereco,
+           attrs={'maxlength': 200, 'autocomplete': 'off'}) }}
+  {{ campo('quantidade_dependentes', 'Quantidade de dependentes', valores.quantidade_dependentes, erros.quantidade_dependentes,
+           tipo='number', attrs={'inputmode': 'numeric', 'min': 0, 'max': 30, 'autocomplete': 'off'}) }}
+  <button class="btn btn--primario btn--acao" type="submit">Validar e Registrar Entrega</button>
+</form>
+{% endblock %}

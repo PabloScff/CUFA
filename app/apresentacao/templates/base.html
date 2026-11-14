@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Creamshaper – CUFA{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topo">
+    <img class="topo__logo" src="/static/logo-cufa.svg" alt="CUFA – Central Única das Favelas" width="44" height="44">
+    <p class="topo__titulo">Creamshaper – CUFA</p>
+  </header>
+  {% block faixa %}{% endblock %}
+  <main class="conteudo">
+    {% block conteudo %}{% endblock %}
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
