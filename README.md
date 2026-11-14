@@ -34,3 +34,7 @@ Para PostgreSQL (Supabase/Neon ou Docker), troque `DATABASE_URL` no `.env`.
 - **CPF já cadastrado:** não cria cópia. Se não há entrega no ciclo, registra a entrega; se há, **bloqueia** (Tela 3).
 - **Logo:** `static/logo-cufa.svg` é um marcador; troque pelo arquivo oficial da CUFA.
 - **Logout:** a lista de tokens revogados fica em memória (1 instância). Com várias instâncias, use Redis ou tabela.
+## Decisões de arquitetura e segurança
+- Camadas: apresentacao -> dominio <- persistencia; a regra de duplicidade não depende de banco nem de FastAPI.
+- Segurança: validação Pydantic, ORM sem SQL bruto, bcrypt, JWT em cookie HttpOnly, limite de tentativas de login.
+- Limitações conhecidas: revogação de token e limitador em memória; CPF validado só pelo formato; sem token CSRF.
