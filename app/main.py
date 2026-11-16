@@ -45,3 +45,11 @@ async def _nao_autenticado(request: Request, exc: NaoAutenticado):
 async def _erro_generico(request: Request, exc: Exception):
     log.exception("Erro interno em %s", request.url.path)  # detalhe só no log interno (OWASP A09)
     return HTMLResponse("<h1>Algo deu errado.</h1><p>Tente novamente. Se continuar, avise a coordenação.</p>", status_code=500)
+
+from sqlalchemy import text
+
+@app.get("/saude", include_in_schema=False)
+def saude():
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    return {"status": "ok"}
